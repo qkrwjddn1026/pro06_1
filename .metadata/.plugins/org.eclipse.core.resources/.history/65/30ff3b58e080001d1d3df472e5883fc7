@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script> 
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+    <section class="container">
+        <h2>jQuery Ajax 데이터 송수신 메소드 - ajax()</h2>
+        <article class="data">
+            <div><h2>AJAX Data Trans</h2></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>PW</th>
+                        <th>NAME</th>
+                    </tr>
+                </thead>
+                <tbody id="result">
+                    
+                </tbody>
+            </table>
+            <button type="button" id="btn1">회원 목록 로딩</button>
+        </article>
+        <div id="msg"></div>
+    </section>
+    <script>
+        $(document).ready(function(){
+            $("#btn1").click(function(){
+                $.ajax({
+                    url:"/ajax/userList.do",
+                   // data:id,
+                    contentType:'application/json;charset=utf-8',
+                    method:"POST",
+                    dataType:"json"
+                })
+                .done(function(res){
+                    console.log(res);
+                })
+                .fail(function(xhr, status, errorThrown){
+                    $("#msg").text("회원 목록 로딩 실패."+xhr.status);
+                })
+            });
+        });
+    </script>
+</body>
+</html>

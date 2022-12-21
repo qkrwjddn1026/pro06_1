@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script> 
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+    <section class="container">
+        <h2>jQuery Ajax 데이터 송수신 메소드 - ajax()</h2>
+        <article class="data">
+            <div><h2>AJAX Data Trans</h2></div>
+            <form>
+                <input type="text" id="id" name="id" placeholder="id">
+                <input type="password" id="pw" name="pw" placeholder="pw">
+            </form>
+            <button type="button" id="btn1">login</button>
+        </article>
+        <div id="msg"></div>
+        <ul id="result"></ul>
+    </section>
+    <script>
+        $(document).ready(function(){
+            $("#btn1").click(function(){
+                var userId = $("#id").val();
+                var userPw = $("#pw").val();
+                if(userId==""||userPw==""){
+                    alert("아이디 또는 비밀번호가 입력되지 않았습니다.");
+                    return false;
+                }
+                var user = {id:userId, pw:userPw};
+                $.ajax({
+                    url:"/ajax/getLogin.do?id="+userId+"&pw="+userPw,
+                    //data:user,
+                    contentType:'application/json;charset=utf-8',
+                    method:"GET",
+                    dataType:"json"
+                })
+                .done(function(res){
+                    console.log(res);
+                    
+                })
+                .fail(function(xhr, status, errorThrown){
+                    $("#msg").text("로그인 실패");
+                })
+                .always(function(xhr, status){
+
+                });
+            });
+        });
+    </script>
+</body>
+</html>
